@@ -51,6 +51,8 @@ def list_buckets():
     for bucket in response["Buckets"]:
         print(bucket["Name"])
 
+    return response["Buckets"]
+
 
 def run_examples():
     print("*****Listing buckets example...")
