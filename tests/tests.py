@@ -10,7 +10,7 @@ class TestUpload(unittest.TestCase):
     """
     Test cases for AWS connectivity
     """
-    def test_can_open_s3_session(self):
+    def test_can_open_close_s3_session(self):
         session = boto3.Session(profile_name='wmorgan85')
         print(session.profile_name)
 
