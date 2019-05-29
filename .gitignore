@@ -1,3 +1,6 @@
 *.pyc
 __pycache__
 secrets.py
+/res/static/index.html
+/res/static/dynamo.py
+/res/static/refresh.js
