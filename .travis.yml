@@ -1,9 +1,15 @@
 language: python
 python:
-  - "3.6"
+- '3.6'
+before_install:
+    - ./ecr_credentials.sh
 install:
-  - pip install -r requirements.txt
+- pip install -r requirements.txt
 script:
-  - python -m unittest discover
-  - flake8 tests/
-  - black tests/
+- python -m unittest discover
+- flake8 tests/
+- black tests/
+env:
+  global:
+  - secure: TlA4/tauE55CyFfXvQtGB4uLEtfm46qRXZ7nPl0yMWmT3011fTV/VK1L+DVrbslzVFzpdPW9w2GMfC3rn3jC1rc7ZUCawVm6Z+cRU6yrBUH2x/Bswv37vGEiAQ1j+FMZM0wUdbEbyY+Kf3D1vtvmijZAvISi13dooKcTQyZnNp9HwarGpbcfkV83k6PO+jsjRbQZ86lmIN4mpnmjdqTXkxi6RTHZB9qUVKxvjs+bfBRuNqFth4rxxqAtaQKCRKiPFJEhspmEAECnJUJcs+SgNGzEg8VRFKy/+YyWEZ3tJqIvhkWULcLUNpAG0p04whm/KvFeL1dtURm1oK7cK/KgYFIXyCpJe23vl0jTZ/RSYz5pu74G2yAxPNsospMp2IkxFmYtzcB7JHtKe9e/c2KsLs15AkykqHDG8vMEf5lHI3Id7X/GmQoLx/QDolhR8jKrEOwxTj3LY9rdA4wmbTT+FCdB5uSwoDg7EhPorjlq7flBlokJX1UuS9SghzlEyDRRoMIyMcJVbtsDgUFcbxXTtPwwNENI7DpO6CI/0Rpnn7rjS5dx9/tDIF1byIP2N5MdAT1YT0ND28lPI+3ZEUD3rC8LBOJl0WQ7/KmsYHybg9w27eOXmPv0OCV3NhY4RBtEnTMdK00iWVBec8p2tUkE7d6XQfGADtYgCxFR3aQF+kk=
+  - secure: edMpzky4y3Dq+TS3B4K8UzFpU5XEbYWgRebYEY0os0QdlQW0eaBTTxDdgNds+iBXgnZ1Py3WR1/6v3RMIUcuGw6CnQNajkQwE/LprFdXyz1SKHGrMXjNBkahShMIsEjBBOAr9xrN5/+RttAm7a8E6fEqCnxv9bSYKgEAxucrMBZt01qgCyfPxaRkRqj2i+pkiA0NfMZJWIybOk3mlVNjKG1rlSWP+D+7Dsjde1GeBI2jOWw3Sx8bmG2vu+c3lzIykvGCCPbt7QXfcxsTqCKd33TDgFJ+wRaQpyiYOSt1jMrboz2Edw24d3EIJ/iPMvw4p99Cu8lGrsVkc9PH1+MWc7L0waGOw7ypEv79+2YW3y/idYn4sC9vN0Ec7Ku6YCOzMQ8O8n/C4l8Z5tV7D9YJpjSnkfr8BrCyxx24blopsh6vINbbbZyD3N0nRuT88ukCxRMkl2NPIvErqG/wXR3SkyQmGOhD0kquR3gE0utsMKv+nislWrUKS1mHBOnFFReB8dVZEMsSMuZ5qnwyL+xWCtNBCP38ZoDpJzTJlzuCtVrh9upN8tLvrvYP6hUpP4pwl4YBfni0FJpjn8Er/z3wv2+WMJwwb19x3LoQudjREFaeePQEV+gYGTXNeoArTpahuld0W2anaBF/ZlwTDT5IvF4FyBG4C6Uu4yuI8JgZQFs=
