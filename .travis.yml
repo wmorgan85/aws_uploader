@@ -1,11 +1,10 @@
 language: python
 python:
 - '3.6'
-before_install:
-    - ./ecr_credentials.sh
 install:
 - pip install -r requirements.txt
 script:
+- ./ecr_credentials.sh
 - python -m unittest discover
 - flake8 tests/
 - black tests/
