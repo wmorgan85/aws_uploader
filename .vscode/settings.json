@@ -1,7 +1,7 @@
 {
     "python.linting.enabled": true,
     "python.linting.flake8Enabled": true,
-    "python.pythonPath": "/Users/wmorgan85/anaconda/bin/python",
+    "python.pythonPath": "/Users/wmorgan85/anaconda/envs/iotsensor/bin/python",
     "python.testing.unittestArgs": [
         "-v",
         "-s",

@@ -1,44 +1,89 @@
-import boto3
 import os
 import unittest
+import filecmp
+import warnings
 
 # from progress import Progress
-from upload import upload
+from upload.Uploader import Uploader
 
 
 class TestUpload(unittest.TestCase):
     """
     Test cases for AWS connectivity
     """
-    def test_can_open_close_s3_session(self):
-        session = boto3.Session(profile_name='wmorgan85')
-        print(session.profile_name)
+    def setUp(self):
+        filename = "sample_file.txt"
+        test_dir = os.path.dirname(os.path.realpath(__file__))
+        filepath = os.path.join(test_dir, filename)
+        warnings.simplefilter("ignore", ResourceWarning)
+        u = Uploader(profile_name='wmorgan85')
+        u.upload_file(filepath, "wmorgan85-iot-dashboard", filename)
+
+    def tearDown(self):
+        u = Uploader(profile_name='wmorgan85')
+        u.delete_file("sample_file.txt", "wmorgan85-iot-dashboard")
+
+    def test_can_create_s3_client_with_profile(self):
+        u = Uploader()
+        s = u.create_s3_client(profile_name='wmorgan85')
+        self.assertIsNotNone(s)
+
+    def test_can_list_s3_buckets(self):
+        u = Uploader()
+        bucket_list = u.list_buckets()
+        is_list = isinstance(bucket_list, list)
+        self.assertEqual(is_list, True)
+
+    def test_can_list_bucket_items(self):
+        u = Uploader()
+        items = u.list_items("wmorgan85-iot-dashboard")
+        validation_list = [
+            "README",
+            "index.html",
+            "moviedata.json",
+            "refresh.js",
+            "requirements.txt",
+            "sample_file.txt"
+        ]
+        self.assertEqual(items, validation_list)
+
+    def test_can_upload_file(self):
+        bucket = "wmorgan85-iot-dashboard"
+        filename = "sample_file.txt"
+        test_dir = os.path.dirname(os.path.realpath(__file__))
+        filepath = os.path.join(test_dir, filename)
+        u = Uploader(profile_name='wmorgan85')
+        self.assertEqual(u.upload_file(filepath, bucket, filename), True)
+
+    def test_can_download_file(self):
+        bucket = "wmorgan85-iot-dashboard"
+        filename = "sample_file.txt"
+        test_dir = os.path.dirname(os.path.realpath(__file__))
+        filepath = os.path.join(test_dir, filename)
+        u = Uploader(profile_name='wmorgan85')
+        u.download_file(filename, filepath+".new", bucket)
+        self.assertEqual(filecmp.cmp(filepath, filepath+".new"), True)
+
+    def test_can_delete_file(self):
+        bucket = "wmorgan85-iot-dashboard"
+        filename = "sample_file.txt"
+        expected_response = [{'Key': filename}]
+        u = Uploader(profile_name='wmorgan85')
+        response = u.delete_file(filename, bucket)
+        self.assertEqual(response, expected_response)
+
+    # TODO - all of these...
+    def test_can_create_s3_client_with_secrets(self):
+        pass
 
     def test_can_close_s3_session(self):
         pass
-
-    def test_can_send_simple_file(self):
-        bucket = "wmorgan85-iot-dashboard"
-        test_dir = os.path.dirname(os.path.realpath(__file__))
-        filename = "sample_file.txt"
-        filename = os.path.join(test_dir, filename)
-        self.assertEqual(upload.upload_file(filename, bucket), True)
 
     def test_can_send_file_with_permissions(self):
         pass
 
     def test_can_send_file_with_progress(self):
         pass
-
-    def test_can_download_file(self):
-        pass
-
-    def test_can_delete_file(self):
-        pass
-
-    def test_can_list_s3_buckets(self):
-        bucket_list = upload.list_buckets()
-        self.assertEqual(type(bucket_list), type(list()))
 
 
 """
