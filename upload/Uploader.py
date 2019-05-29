@@ -4,6 +4,9 @@ import logging
 from botocore.exceptions import ClientError
 from progress import ProgressPercentage
 
+# for more go to...
+# https://realpython.com/python-boto3-aws-s3/
+
 
 class Uploader(object):
 
